@@ -5,7 +5,7 @@ on:
       - main
   
 jobs:
-  build-and-deploy:
+  build:
     runs-on: windows-latest
     
     steps:
@@ -22,7 +22,11 @@ jobs:
 
       - name: publish project
         run: dotnet publish -c Release -o publish
+  deploy:
+      runs-on: windows-latest
+      needs: build
 
+      steps:
       - name: Deploy to Azure Functions
         uses: Azure/functions-action@v1
         with: 
