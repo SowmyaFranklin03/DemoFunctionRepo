@@ -23,6 +23,9 @@ jobs:
       - name: publish project
         run: dotnet publish FunctionApp1/FunctionApp1.csproj --configuration Release --output ./publish
 
+      # - name: Tar files to preserve file permissions   
+      #   run: tar -cvf output.tar ./publish
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -38,8 +41,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: function-app
-          path: ./publish
-          
+
+      # - name: Unzip the Tar to Get Raw Files   
+      #   run: tar -xf output.tar
+           
       - name: Deploy to Azure Functions
         uses: Azure/functions-action@v1
         with: 
